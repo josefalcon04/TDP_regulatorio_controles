@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Planta de Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef1f7;
+            text-align: center;
+        }
+        .contenedor {
+            background: white;
+            padding: 20px;
+            max-width: 90%;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .seccion {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        select, input {
+            margin: 5px;
+            padding: 5px;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .grafico {
+            width: 100%;
+            max-width: 500px;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function actualizarGrafico() {
+            var tecnologia = document.getElementById("tecnologia").value;
+            var estado = document.getElementById("estado").value;
+            var inputPeriodo = document.getElementById("periodo").value.trim();
+            var periodosSeleccionados = [];
+
+            document.querySelectorAll("input[name='periodo_hidden']").forEach(function (element) {
+                if (inputPeriodo === "" || element.value.startsWith(inputPeriodo)) {
+                    periodosSeleccionados.push(element.value);
+                }
+            });
+
+            var periodoStr = periodosSeleccionados.join(",");
+            var img = document.getElementById("grafico");
+            img.src = `/grafico1?tecnologia=${encodeURIComponent(tecnologia)}&estado=${encodeURIComponent(estado)}&periodo=${encodeURIComponent(periodoStr)}`;
+            
+            // Actualizar resumen de predicción
+            fetch(`/prediccion_texto?tecnologia=${encodeURIComponent(tecnologia)}&estado=${encodeURIComponent(estado)}&periodo=${encodeURIComponent(periodoStr)}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("resumen").innerText = data.resumen;
+                })
+                .catch(error => {
+                    console.error("Error obteniendo la predicción:", error);
+                    document.getElementById("resumen").innerText = "Error al obtener la predicción.";
+                });
+        }
+    </script>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Planta de Control</h1>
+        <div class="seccion">
+            <h2>Gráfico de Predicción</h2>
+            <label><strong>Tecnología:</strong></label>
+            <select id="tecnologia" onchange="actualizarGrafico()">
+                {% for tech in tecnologias1 %}
+                    <option value="{{ tech }}">{{ tech }}</option>
+                {% endfor %}
+            </select>
+
+            <label><strong>Estado:</strong></label>
+            <select id="estado" onchange="actualizarGrafico()">
+                {% for estado in estados1 %}
+                    <option value="{{ estado }}">{{ estado }}</option>
+                {% endfor %}
+            </select>
+
+            <label><strong>Períodos:</strong></label>
+            <input type="text" id="periodo" placeholder="Ej: 2024 o 202401" oninput="actualizarGrafico()">
+
+            {% for periodo in periodo1 %}
+                <input type="hidden" name="periodo_hidden" value="{{ periodo }}">
+            {% endfor %}
+
+            <img id="grafico" class="grafico" src="/grafico1?tecnologia={{ tecnologias1[0] }}&estado={{ estados1[0] }}&periodo=" alt="Gráfico con Predicción">        
+
+            <p id="resumen"><em>Selecciona opciones para ver el análisis...</em></p>
+        </div>
+    </div>
+</body>
+</html>

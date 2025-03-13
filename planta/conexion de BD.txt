@@ -1,0 +1,55 @@
+def ConnectTD():
+    try:
+        engine = create_engine("teradatasql://ic_jfalconf:OQ38b&655@teraprod.gp.inet")        
+        return engine
+    except Exception as e:
+        logging.error(f"Error de conexión a Teradata: {e}")
+        return None
+
+def Query_Teradata():
+    print("Query_Teradata")    
+    engine = ConnectTD()
+    
+    if not engine:
+        logging.error("No se pudo conectar a Teradata")
+        return []
+
+    sql_trd = """
+    select * from PE_DESA_REG_DATA.TMP_REG_BA_PLANTA;
+    """
+
+    try:
+        df_trd = pd.read_sql(sql_trd, engine)
+        print("Query terada OK")
+        return df_trd.to_dict(orient="records")
+        
+    except Exception as ERR_TERA:
+        logging.error(f"Error al ejecutar la consulta en Query_Teradata: {ERR_TERA}")
+        return []
+    finally:
+        engine.dispose()
+        print("Conexión a Teradata cerrada")
+
+def Query_Teradata2():
+    print("Query_Teradata2")    
+    engine = ConnectTD()
+    
+    if not engine:
+        logging.error("No se pudo conectar a Teradata")
+        return []
+
+    sql_trd2 = """
+    select * from PE_DESA_REG_DATA.TMP_PLT_CHURN_FIJA;
+    """
+
+    try:
+        df_trd2 = pd.read_sql(sql_trd2, engine)
+        print("Query terada2 OK")
+        return df_trd2.to_dict(orient="records")
+        
+    except Exception as ERR_TERA:
+        logging.error(f"Error al ejecutar la consulta en Query_Teradata2: {ERR_TERA}")
+        return []
+    finally:
+        engine.dispose()
+        print("Conexión a Teradata2 cerrada")

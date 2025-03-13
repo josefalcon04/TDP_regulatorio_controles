@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Monitoreo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .status {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .ok { background: #4CAF50; color: white; }
+        .error { background: #F44336; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Dashboard de Monitoreo</h1>
+    <div class="container">
+        <div class="card">
+            <h2>Proceso A</h2>
+            <p class="status ok">OK</p>
+        </div>
+        <div class="card">
+            <h2>Proceso B</h2>
+            <p class="status error">Fallo</p>
+        </div>
+        <div class="card">
+            <h2>Proceso C</h2>
+            <p class="status ok">OK</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitoreo de Procesos Regulatorios</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+                margin: 0;
+                padding: 0;
+            }
+    
+            .header {
+                background-color: #003366;
+                color: white;
+                text-align: center;
+                padding: 15px;
+                font-size: 20px;
+                font-weight: bold;
+            }
+    
+            .container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 20px;
+                gap: 20px;
+            }
+    
+            .panel {
+                display: flex;
+                flex-direction: column;
+                width: fit-content;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: white;
+            }
+    
+            .panel-title {
+                font-weight: bold;
+                margin-bottom: 10px;
+                text-align: center;
+                width: 100%;
+            }    
+            /* Contenedor de estados dentro del panel */            
+            .status-container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr); /* Divide en 3 columnas */
+                gap: 10px; /* Espaciado entre elementos */
+                align-items: start; /* Alinea los elementos al inicio */
+            }
+            .status {
+                display: flex;
+                align-items: center;
+                white-space: nowrap;
+                margin-bottom: 5px;
+            }
+    
+            /* Bloque individual de procesos */
+            .block {
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+            }
+    
+            /* Indicador de color */
+            .status-indicator {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                margin-right: 5px;
+            }
+    
+            .green { background-color: green; }
+            .red { background-color: red; }
+            .yellow { background-color: yellow; }
+    
+        </style>
+    </head>
+    
+<body>
+    <div class="header">MONITOREO DE PROCESOS REGULATORIOS</div>
+    <div class="container">
+        <div class="panel">
+            <div class="panel-title">REPORTES TRIMESTRALES</div>
+            <div class="status-group">
+                <div class="status"><div class="status-indicator green"></div>NRIPO_002</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_200</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_037</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_191</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_002</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_189</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_050</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_013</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_046</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_019</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_004</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_014</div>
+                <div class="status"><div class="status-indicator green"></div>NRIAO_004</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_007</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_206</div>                                            
+                <div class="status"><div class="status-indicator green"></div>NRIPO_040</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_025</div>
+                <div class="status"><div class="status-indicator green"></div>NRIAO_005</div>
+                <div class="status"><div class="status-indicator green"></div>NRIAO_017</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_198</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_044</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_045</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_006</div>
+                <div class="status"><div class="status-indicator green"></div>NRIAO_001</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_036</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_003</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_029</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_193</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_033</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_041</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_196</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_035</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_048</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_020</div>
+                <div class="status"><div class="status-indicator green"></div>NRIAO_016</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_047</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_186</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_038</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_190</div>
+                <div class="status"><div class="status-indicator green"></div>NRIAO_003</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_199</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_049</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_192</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_034</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_194</div>
+                <div class="status"><div class="status-indicator green"></div>RIAM_201</div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-title">REPORTES MENSUALES</div>
+            <div class="status-group">
+                <div class="status"><div class="status-indicator green"></div>NRIPO_054</div>
+                <div class="status"><div class="status-indicator green"></div>INEI</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_017</div>           
+                <div class="status"><div class="status-indicator green"></div>NRIAO_008</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_015</div>
+                <div class="status"><div class="status-indicator green"></div>INFORME TRAFICO (RT)</div>            
+                <div class="status"><div class="status-indicator green"></div>NRIAO_009</div>
+                <div class="status"><div class="status-indicator green"></div>NRIAO_010</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_055</div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">REPORTES SEMESTRALES</div>
+            <div class="status-group">
+                <div class="status"><div class="status-indicator green"></div>NRIPO_042</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_026</div>            
+                <div class="status"><div class="status-indicator green"></div>NRIPO_018</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_030</div>            
+                <div class="status"><div class="status-indicator green"></div>NRIPO_009</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_031</div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-title">REPORTES ANUALES</div>
+            <div class="status-group">
+                <div class="status"><div class="status-indicator green"></div>NRIPO_022</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_010</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_052</div>            
+                <div class="status"><div class="status-indicator green"></div>NRIPO_008</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_039</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_011</div>            
+                <div class="status"><div class="status-indicator green"></div>NRIPO_012</div>
+                <div class="status"><div class="status-indicator green"></div>NRIPO_051</div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">REPORTES RENTESEG</div>
+            <div class="status-group">
+                <div class="status"><div class="status-indicator green"></div>REGISTRO ABONADOS</div>
+                <div class="status"><div class="status-indicator green"></div>CLONADOS</div>
+                <div class="status"><div class="status-indicator green"></div>VINCULACIONES</div>
+                <div class="status"><div class="status-indicator green"></div>REPORTES CDRS</div>
+            </div>            
+        </div>
+    </div>
+</body>
+</html>

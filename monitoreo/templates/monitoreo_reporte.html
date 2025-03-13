@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo de Procesos Regulatorios</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { 
+            width: 100vw; 
+            height: 100vh; 
+            font-family: Arial, sans-serif; 
+            display: flex; 
+            flex-direction: column;
+            background-color: #f8f9fa;
+            overflow: hidden;
+        }
+
+        /* ENCABEZADO */
+.header {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 2px 15px;
+    background-color: #d531d5;
+    color: white;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    height: 40px;  /* Ajusta la altura total */
+    display: flex;
+    align-items: center;  /* Centra verticalmente el contenido */
+    justify-content: center;  /* Centra horizontalmente el contenido */
+}
+
+
+        /* CONTENEDOR PRINCIPAL */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 10px 15px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* PANEL DE CATEGORÍAS */
+        .panel {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .panel-title {
+            font-size: clamp(14px, 2vw, 18px);
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        /* CONTENEDOR DE REPORTES */
+        .report-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(12px, 1.5vw, 14px);
+            flex: 1;
+        }
+
+        /* ESTILOS DE REPORTES */
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 1px;
+            background-color: #f1f1f1;
+            border-radius: 6px;
+            text-align: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: background 0.3s;
+            min-height: 15px;
+        }
+
+        .status:hover {
+            background-color: #e9ecef;
+        }
+
+        /* ICONOS DE ESTADO */
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .green { background-color: #28a745; }
+        .yellow { background-color: #ffc107; }
+        .red { background-color: #dc3545; }
+        .grey { background-color: #6c757d; }
+
+        /* ENLACES */
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            font-size: clamp(10px, 1vw, 14px);
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        button:hover {
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño */
+}
+
+button:active {
+    transform: scale(0.9); /* Se achica un poco al hacer clic */
+}
+    </style>
+</head>
+<body>
+    <div class="header">Monitoreo de Procesos Regulatorios
+        <button onclick="actualizarDatos()" 
+    style="margin: 10px; padding: 10px; font-size: 30px; background: none; border: none; cursor: pointer; transition: transform 0.2s;">
+    🔄
+</button>
+    
+    </div>
+    <script>
+        function actualizarDatos() {
+            fetch('/actualizar_datos')
+            .then(response => response.json())
+            .then(data => {
+                const contenedores = {
+                    'trimestrales': document.querySelector('.grid-container .panel:nth-child(1) .report-container'),
+                    'mensuales': document.querySelector('.grid-container .panel:nth-child(2) .report-container'),
+                    'semestrales': document.querySelector('.grid-container .panel:nth-child(3) .report-container'),
+                    'anuales': document.querySelector('.grid-container .panel:nth-child(4) .report-container')
+                };
+    
+                Object.keys(data).forEach(tipo => {
+                    const container = contenedores[tipo];
+                    if (container) {
+                        container.innerHTML = ''; // Limpiar contenido
+                        data[tipo].forEach(reporte => {
+                            container.innerHTML += `
+                                <div class="status">
+                                    <span class="status-indicator ${reporte.indicador}"></span>
+                                    <a href="/detalle_reporte?nombre=${reporte.nombre_original}" target="_blank">${reporte.nombre}</a>
+                                </div>
+                            `;
+                        });
+                    }
+                });
+            })
+            .catch(error => console.error('Error al actualizar los datos:', error));
+        }
+    </script>
+    
+    <div class="grid-container">
+        <!-- TRIMESTRALES -->
+        <div class="panel">
+            <div class="panel-title">TRIMESTRALES</div>
+            <div class="report-container">
+                {% for reporte in reportes_trimestrales %}
+                    <div class="status">
+                        <span class="status-indicator {{ reporte.indicador }}"></span>
+                        <a href="{{ url_for('detalle_reporte', nombre=reporte.nombre_original) }}" target="_blank">{{ reporte.nombre }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- MENSUALES -->
+        <div class="panel">
+            <div class="panel-title">MENSUALES</div>
+            <div class="report-container">
+                {% for reporte in reportes_mensuales %}
+                    <div class="status">
+                        <span class="status-indicator {{ reporte.indicador }}"></span>
+                        <a href="{{ url_for('detalle_reporte', nombre=reporte.nombre_original) }}" target="_blank">{{ reporte.nombre }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- SEMESTRALES -->
+        <div class="panel">
+            <div class="panel-title">SEMESTRALES</div>
+            <div class="report-container">
+                {% for reporte in reportes_semestrales %}
+                    <div class="status">
+                        <span class="status-indicator {{ reporte.indicador }}"></span>
+                        <a href="{{ url_for('detalle_reporte', nombre=reporte.nombre_original) }}" target="_blank">{{ reporte.nombre }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- ANUALES -->
+        <div class="panel">
+            <div class="panel-title">ANUALES</div>
+            <div class="report-container">
+                {% for reporte in reportes_anuales %}
+                    <div class="status">
+                        <span class="status-indicator {{ reporte.indicador }}"></span>
+                        <a href="{{ url_for('detalle_reporte', nombre=reporte.nombre_original) }}" target="_blank">{{ reporte.nombre }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
